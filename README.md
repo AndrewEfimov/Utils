@@ -15,7 +15,7 @@ uIPv4Helper:
 * **class function GetNumberAvailableIPAddresses(const SubnetMaskValue: string): Int64;** - Получение Количества адресов в подсети исходя из маски подсети
 
 uBinHelper:
-* **class function BitCount(const AValue: Int64; AIsByte: Boolean): Integer;** - Количество установленных бит
+* **class function BitCount(const AValue: Int64; AIsByte: Boolean = False): Integer;** - Количество установленных бит
 * **class function BinToDec(const AValue: string): Int64;** - 0001 0100 0000 0101 = 5125
 * **class function DecToBinStr(const AValue: Int64; ABits: Integer): string; overload;** - 5125 = 0001 0100 0000 0101
 * **class function DecToBinStr(const AValue: Byte): string; overload;** - 0..255 = 0000 0000 .. 1111 1111
