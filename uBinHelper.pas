@@ -22,7 +22,7 @@ type
     BitsInByte = 8;
     BinPattern = '^([01]{1,64})$';
   public
-    /// <summary> The number of set bits (=1) </summary>
+    /// <summary> Returns the number of set bits (=1) </summary>
     class function BitCount(const AValue: Int64; AIsByte: Boolean = False): Integer;
     /// <summary> 0001 0100 0000 0101 = 5125 </summary>
     class function BinToDec(const AValue: string): Int64;
