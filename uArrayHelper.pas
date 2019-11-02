@@ -1,4 +1,4 @@
-{ *********************************************************************
+п»ї{ *********************************************************************
   *
   * Autor: Efimov A.A.
   * E-mail: infocean@gmail.com
@@ -19,11 +19,11 @@ uses
 type
   TArrayHelper = class
   public
-    /// <summary>Создаём массив (длина - ALength) и заполняем по порядку начиная с AStart, перемешиваем массив</summary>
+    /// <summary>РЎРѕР·РґР°С‘Рј РјР°СЃСЃРёРІ (РґР»РёРЅР° - ALength) Рё Р·Р°РїРѕР»РЅСЏРµРј РїРѕ РїРѕСЂСЏРґРєСѓ РЅР°С‡РёРЅР°СЏ СЃ AStart, РїРµСЂРµРјРµС€РёРІР°РµРј РјР°СЃСЃРёРІ</summary>
     class function CreateMixIntArray(const AStart, ALength: Integer): TArray<Integer>;
-    /// <summary>Создаём массив (длина - ALength) и заполняем рандомными неповторяющимися числами в промежутке от AFrom до ATo</summary>
+    /// <summary>РЎРѕР·РґР°С‘Рј РјР°СЃСЃРёРІ (РґР»РёРЅР° - ALength) Рё Р·Р°РїРѕР»РЅСЏРµРј СЂР°РЅРґРѕРјРЅС‹РјРё РЅРµРїРѕРІС‚РѕСЂСЏСЋС‰РёРјРёСЃСЏ С‡РёСЃР»Р°РјРё РІ РїСЂРѕРјРµР¶СѓС‚РєРµ РѕС‚ AFrom РґРѕ ATo</summary>
     class function CreateRandIntArray(const AFrom, ATo, ALength: Integer): TArray<Integer>;
-    /// <summary>Перемешиваем значения массива любого типа</summary>
+    /// <summary>РџРµСЂРµРјРµС€РёРІР°РµРј Р·РЅР°С‡РµРЅРёСЏ РјР°СЃСЃРёРІР° Р»СЋР±РѕРіРѕ С‚РёРїР°</summary>
     class procedure MixArray<T>(var AArray: TArray<T>);
   end;
 
@@ -50,7 +50,7 @@ var
   I, J: Integer;
 begin
   if (ATo - AFrom + 1) < ALength then
-    raise Exception.Create('Диапазон меньше длины массива');
+    raise Exception.Create('Р”РёР°РїР°Р·РѕРЅ РјРµРЅСЊС€Рµ РґР»РёРЅС‹ РјР°СЃСЃРёРІР°');
 
   SetLength(Result, ALength);
 

@@ -1,4 +1,4 @@
-{ *********************************************************************
+п»ї{ *********************************************************************
   *
   * Autor: Efimov A.A.
   * E-mail: infocean@gmail.com
@@ -19,12 +19,12 @@ uses
 type
   TParse = class
   private
-    /// <summary>Чистим строку от тегов</summary>
+    /// <summary>Р§РёСЃС‚РёРј СЃС‚СЂРѕРєСѓ РѕС‚ С‚РµРіРѕРІ</summary>
     class procedure ClearString(var Str: string);
   public
-    /// <summary>Находим первое совпадение и вырезаем строку между TagBegin и TagEnd</summary>
+    /// <summary>РќР°С…РѕРґРёРј РїРµСЂРІРѕРµ СЃРѕРІРїР°РґРµРЅРёРµ Рё РІС‹СЂРµР·Р°РµРј СЃС‚СЂРѕРєСѓ РјРµР¶РґСѓ TagBegin Рё TagEnd</summary>
     class function FirstMatch(const Str, TagBegin, TagEnd: string): string;
-    /// <summary>Находим все совпадения начиная с Position и вырезаем строки между TagBegin и TagEnd</summary>
+    /// <summary>РќР°С…РѕРґРёРј РІСЃРµ СЃРѕРІРїР°РґРµРЅРёСЏ РЅР°С‡РёРЅР°СЏ СЃ Position Рё РІС‹СЂРµР·Р°РµРј СЃС‚СЂРѕРєРё РјРµР¶РґСѓ TagBegin Рё TagEnd</summary>
     class function AllMatches(const Str, TagBegin, TagEnd: string; Position: Integer): TStringList;
   end;
 
