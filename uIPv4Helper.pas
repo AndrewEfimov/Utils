@@ -27,21 +27,21 @@ type
     class function DecToIpv4(const AValue: Cardinal): string;
     /// <summary> 192.168.1.1 -> 3232235777 </summary>
     class function Ipv4ToDec(const AValue: string): Cardinal;
-    /// <summary> Получем список всех возможных масок подсети </summary>
+    /// <summary> Returns a list of all possible subnet masks </summary>
     class function GetPossibleSubnetMasks(): TArray<string>;
     /// <summary> 255.255.252.0 -> 0.0.3.255 </summary>
     class function InverseSubnetMask(const AValue: string): string;
     /// <summary> 192.168.1.2 -> 11000000.10101000.00000001.00000010 </summary>
     class function IPv4ToBinStr(const AValue: string; AddSeparator: Boolean = True): string;
-    /// <summary> Получение Адреса сети исходя из Ip-адреса и маски подсети </summary>
+    /// <summary> Returns "Network Address" based on IP address and subnet mask </summary>
     class function GetNetworkAddress(const IPValue, SubnetMaskValue: string): string;
-    /// <summary> Получение Широковещательного адреса исходя из Ip-адреса и маски подсети </summary>
+    /// <summary> Returns "Broadcast Address" based on IP address and subnet mask </summary>
     class function GetBroadcastAddress(const IPValue, SubnetMaskValue: string): string;
-    /// <summary> Получение Адреса для первого хоста исходя из Ip-адреса и маски подсети </summary>
+    /// <summary> Returns "Address for the first host" based on the IP address and subnet mask </summary>
     class function GetIPAddressOfFirstHost(const IPValue, SubnetMaskValue: string): string;
-    /// <summary> Получение Адреса для последнего хоста исходя из Ip-адреса и маски подсети </summary>
+    /// <summary> Returns "Address for last host" based on IP address and subnet mask </summary>
     class function GetIPAddressOfLastHost(const IPValue, SubnetMaskValue: string): string;
-    /// <summary> Получение Количества адресов в подсети исходя из маски подсети </summary>
+    /// <summary> Returns the "Number of addresses in the subnet" based on the subnet mask </summary>
     class function GetNumberAvailableIPAddresses(const SubnetMaskValue: string): Int64;
   end;
 
@@ -52,10 +52,10 @@ implementation
 (*
   Используются побитовые операции 'shr'(сдвиг вправо) и 'and'(умножение)
   Пример: 3232235777 -> 192.168.1.1
-  192 = 00000000 00000000 00000000 11000000            = 00000000 00000000 00000000 01011110 = 192
-  168 = 00000000 00000000 11000000 10101000 * 11111111 = 00000000 00000000 00000000 10101000 = 168
-    1 = 00000000 11000000 10101000 00000001 * 11111111 = 00000000 00000000 00000000 00000001 = 1
-    1 = 11000000 10101000 00000001 00000001 * 11111111 = 00000000 00000000 00000000 00000001 = 1
+  00000000 00000000 00000000 11000000            = 00000000 00000000 00000000 01011110 = 192
+  00000000 00000000 11000000 10101000 * 11111111 = 00000000 00000000 00000000 10101000 = 168
+  00000000 11000000 10101000 00000001 * 11111111 = 00000000 00000000 00000000 00000001 = 1
+  11000000 10101000 00000001 00000001 * 11111111 = 00000000 00000000 00000000 00000001 = 1
 *)
 class function TIPv4Helper.DecToIpv4(const AValue: Cardinal): string;
 begin
@@ -110,7 +110,7 @@ class function TIPv4Helper.GetNumberAvailableIPAddresses(const SubnetMaskValue: 
 var
   NumberOfOneBits: Integer;
 begin
-  NumberOfOneBits := TBinHelper.BitCount(Ipv4ToDec(InverseSubnetMask(SubnetMaskValue)), False);
+  NumberOfOneBits := TBinHelper.BitCount(Ipv4ToDec(InverseSubnetMask(SubnetMaskValue)));
   Result := Int64(1) shl NumberOfOneBits;
 end;
 
@@ -148,7 +148,7 @@ begin
   Result := DecToIpv4(not Ipv4ToDec(AValue));
 end;
 
-class function TIPv4Helper.IPv4ToBinStr(const AValue: string; AddSeparator: Boolean = True): string;
+class function TIPv4Helper.IPv4ToBinStr(const AValue: string; AddSeparator: Boolean): string;
 var
   DecAValue: Cardinal;
   I: Integer;
@@ -177,7 +177,7 @@ var
   AValueSplit: TArray<string>;
 begin
   if not TRegEx.IsMatch(AValue, IpSubnetMaskPattern) then
-    raise Exception.Create('Значение не соответствует маске "000.000.000.000"');
+    raise Exception.Create('The value does not match the mask "000.000.000.000"');
 
   AValueSplit := AValue.Split(['.']);
   Result := (AValueSplit[0].ToInteger shl 24) or (AValueSplit[1].ToInteger shl 16) or (AValueSplit[2].ToInteger shl 8)

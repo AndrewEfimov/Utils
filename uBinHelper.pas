@@ -22,8 +22,8 @@ type
     BitsInByte = 8;
     BinPattern = '^([01]{1,64})$';
   public
-    /// <summary> Количество установленных бит </summary>
-    class function BitCount(const AValue: Int64; AIsByte: Boolean): Integer;
+    /// <summary> The number of set bits (=1) </summary>
+    class function BitCount(const AValue: Int64; AIsByte: Boolean = False): Integer;
     /// <summary> 0001 0100 0000 0101 = 5125 </summary>
     class function BinToDec(const AValue: string): Int64;
     /// <summary> 5125 = 0001 0100 0000 0101 </summary>
@@ -57,7 +57,7 @@ var
   I: Integer;
 begin
   if not TRegEx.IsMatch(AValue, BinPattern) then
-    raise Exception.Create('Допускаются только "1" и "0", длина до 64 символов');
+    raise Exception.Create('Only "1" and "0" are allowed, length up to 64 characters');
 
   Result := 0;
   (*
