@@ -3,9 +3,9 @@
   * Autor: Efimov A.A.
   * E-mail: infocean@gmail.com
   * GitHub: https://github.com/AndrewEfimov
-  * Requirements: -
-  * Platform: Android, Windows
-  * IDE: Delphi 10.1 Berlin +
+  * Platform (Tested): Android, Windows 10 x64
+  * IDE (Tested): Delphi 10.3.1
+  * Change: 03.11.2019
   *
   ******************************************************************** }
 
@@ -18,52 +18,77 @@ uses
 
 type
   TArrayHelper = class
+  private
+    class constructor Create;
   public
-    /// <summary>Создаём массив (длина - ALength) и заполняем по порядку начиная с AStart, перемешиваем массив</summary>
-    class function CreateMixIntArray(const AStart, ALength: Integer): TArray<Integer>;
-    /// <summary>Создаём массив (длина - ALength) и заполняем рандомными неповторяющимися числами в промежутке от AFrom до ATo</summary>
+    /// <summary>Returns a shuffled array filled in order, starting with AStart</summary>
+    class function CreateShuffledIntArray(const AStart, ALength: Integer): TArray<Integer>;
+    /// <summary>
+    /// Returns an array filled with random non-repeating numbers ranging from AFrom (inclusive) to ATo (inclusive).
+    /// Negative ranges are supported.
+    ///</summary>
     class function CreateRandIntArray(const AFrom, ATo, ALength: Integer): TArray<Integer>;
-    /// <summary>Перемешиваем значения массива любого типа</summary>
-    class procedure MixArray<T>(var AArray: TArray<T>);
+    /// <summary>Shuffle array values</summary>
+    class procedure ShuffleArray<T>(var AArray: TArray<T>);
   end;
 
 implementation
 
 { TArrayHelper }
 
-class function TArrayHelper.CreateMixIntArray(const AStart, ALength: Integer): TArray<Integer>;
+class constructor TArrayHelper.Create;
+begin
+  Randomize;
+end;
+
+class function TArrayHelper.CreateShuffledIntArray(const AStart, ALength: Integer): TArray<Integer>;
 var
   I: Integer;
 begin
-  SetLength(Result, ALength);
+  if ALength <= 0 then
+    raise Exception.Create(Format('Length (%d) is less than or equal to 0.', [ALength]));
 
-  // Initialize array
+  SetLength(Result, ALength);
   for I := Low(Result) to High(Result) do
     Result[I] := AStart + I;
 
-  // Mix array
-  MixArray<Integer>(Result);
+  ShuffleArray<Integer>(Result);
 end;
 
 class function TArrayHelper.CreateRandIntArray(const AFrom, ATo, ALength: Integer): TArray<Integer>;
 var
   I, J: Integer;
+  RangeCalc: Integer;
+  AFromInclusive, AToInclusive: Integer;
 begin
-  if (ATo - AFrom + 1) < ALength then
-    raise Exception.Create('Диапазон меньше длины массива');
+  if ALength <= 0 then
+    raise Exception.Create(Format('Length (%d) is less than or equal to 0.', [ALength]));
+
+  RangeCalc := abs(ATo - AFrom) + 1;
+
+  if RangeCalc < ALength then
+    raise Exception.Create(Format('Range(%d .. %d) smaller array length (%d).', [AFrom, ATo, ALength]));
+
+  AToInclusive := ATo;
+  AFromInclusive := AFrom;
+
+  if ATo > AFrom then
+    AToInclusive := ATo + 1
+  else
+    AFromInclusive := AFrom + 1;
 
   SetLength(Result, ALength);
 
   for I := Low(Result) to High(Result) do
   begin
-    Result[I] := RandomRange(AFrom, ATo + 1);
+    Result[I] := RandomRange(AFromInclusive, AToInclusive);
 
     // Check for duplicates
     J := 0;
     while J < I do
       if Result[J] = Result[I] then
       begin
-        Result[I] := RandomRange(AFrom, ATo + 1);
+        Result[I] := RandomRange(AFromInclusive, AToInclusive);
         J := 0;
       end
       else
@@ -71,7 +96,7 @@ begin
   end;
 end;
 
-class procedure TArrayHelper.MixArray<T>(var AArray: TArray<T>);
+class procedure TArrayHelper.ShuffleArray<T>(var AArray: TArray<T>);
 var
   I, RandomIndex: Integer;
   TempValue: T;
