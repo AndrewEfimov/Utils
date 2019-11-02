@@ -20,12 +20,13 @@ uBinHelper:
 * **class function DecToBinStr(const AValue: Int64; ABits: Integer): string; overload;** - 5125 = 0001 0100 0000 0101
 * **class function DecToBinStr(const AValue: Byte): string; overload;** - 0..255 = 0000 0000 .. 1111 1111
 
-
-
 uArrayHelper:
-* **class function CreateMixIntArray(const AStart, ALength: Integer): TArray<Integer>;** - Создаём массив (длина - ALength) и заполняем по порядку начиная с AStart, перемешиваем массив
+* **class function CreateShuffledIntArray(const AStart, ALength: Integer): TArray<Integer>;** - Создаём массив (длина - ALength) и заполняем по порядку начиная с AStart, перемешиваем массив
 * **class function CreateRandIntArray(const AFrom, ATo, ALength: Integer): TArray<Integer>;** - Создаём массив (длина - ALength) и заполняем рандомными неповторяющимися числами в промежутке от AFrom до ATo
-* **class function MixArray<T>(var AArray: TArray<T>);** - Перемешиваем значения массива любого типа
+* **class procedure ShuffleArray<T>(var AArray: TArray<T>);** - Перемешиваем значения массива любого типа
+
+
+
 
 uConvert:
 * **class function Win1251ToKoi8R(const Str: string): string;**
@@ -34,11 +35,6 @@ uConvert:
 uParsing:
 * **class function FirstMatch(const Str, TagBegin, TagEnd: string): string;** - Находим первое совпадение и вырезаем строку между TagBegin и TagEnd
 * **class function AllMatches(const Str, TagBegin, TagEnd: string; Position: Integer): TStringList;** - Находим все совпадения начиная с Position и вырезаем строки между TagBegin и TagEnd
-
-uBinHelper:
-* **class function Win1251ToKoi8R(const Str: string): string;**
-* **class function Koi8RToWin1251(const Str: string): string;**
-
 
 
 
