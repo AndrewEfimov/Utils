@@ -5,10 +5,9 @@
   * GitHub: https://github.com/AndrewEfimov
   * Platform (Tested): Android, Windows 10 x64
   * IDE (Tested): Delphi 10.3.1
-  * Change: 02.11.2019
+  * Change: 07.11.2019
   *
   ******************************************************************** }
-
 unit uBinHelper;
 
 interface
@@ -23,11 +22,11 @@ type
     BinPattern = '^([01]{1,64})$';
   public
     /// <summary> Returns the number of set bits (=1) </summary>
-    class function BitCount(const AValue: Int64; AIsByte: Boolean = False): Integer;
+    class function BitCount(const AValue: Int64; const AIsByte: Boolean = False): Integer;
     /// <summary> 0001 0100 0000 0101 = 5125 </summary>
     class function BinToDec(const AValue: string): Int64;
     /// <summary> 5125 = 0001 0100 0000 0101 </summary>
-    class function DecToBinStr(const AValue: Int64; ABits: Integer): string; overload;
+    class function DecToBinStr(const AValue: Int64; const ABits: Integer): string; overload;
     /// <summary> 0..255 = 0000 0000 .. 1111 1111 </summary>
     class function DecToBinStr(const AValue: Byte): string; overload;
   end;
@@ -36,7 +35,7 @@ implementation
 
 { TBinHelper }
 
-class function TBinHelper.BitCount(const AValue: Int64; AIsByte: Boolean): Integer;
+class function TBinHelper.BitCount(const AValue: Int64; const AIsByte: Boolean): Integer;
 var
   I, SizeBitsAValue: Integer;
 begin
@@ -78,7 +77,7 @@ begin
       Result := Result or (Int64(1) shl (High(AValue) - I));
 end;
 
-class function TBinHelper.DecToBinStr(const AValue: Int64; ABits: Integer): string;
+class function TBinHelper.DecToBinStr(const AValue: Int64; const ABits: Integer): string;
 var
   I: Integer;
 begin

@@ -5,7 +5,7 @@
   * GitHub: https://github.com/AndrewEfimov
   * Platform (Tested): Android, Windows 10 x64
   * IDE (Tested): Delphi 10.3.1
-  * Change: 02.11.2019
+  * Change: 07.11.2019
   *
   ******************************************************************** }
 unit uIPv4Helper;
@@ -32,7 +32,7 @@ type
     /// <summary> 255.255.252.0 -> 0.0.3.255 </summary>
     class function InverseSubnetMask(const AValue: string): string;
     /// <summary> 192.168.1.2 -> 11000000.10101000.00000001.00000010 </summary>
-    class function IPv4ToBinStr(const AValue: string; AddSeparator: Boolean = True): string;
+    class function IPv4ToBinStr(const AValue: string; const AddSeparator: Boolean = True): string;
     /// <summary> Returns "Network Address" based on IP address and subnet mask </summary>
     class function GetNetworkAddress(const IPValue, SubnetMaskValue: string): string;
     /// <summary> Returns "Broadcast Address" based on IP address and subnet mask </summary>
@@ -148,7 +148,7 @@ begin
   Result := DecToIpv4(not Ipv4ToDec(AValue));
 end;
 
-class function TIPv4Helper.IPv4ToBinStr(const AValue: string; AddSeparator: Boolean): string;
+class function TIPv4Helper.IPv4ToBinStr(const AValue: string; const AddSeparator: Boolean): string;
 var
   DecAValue: Cardinal;
   I: Integer;
